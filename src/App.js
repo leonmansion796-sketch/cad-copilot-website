@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 
 // Meshy API key is securely stored on the backend server
-const ANTHROPIC_KEY = process.env.REACT_APP_ANTHROPIC_API_KEY || "";
+// Add your Anthropic API key here
+const ANTHROPIC_KEY = "REPLACE_WITH_YOUR_KEY";
 
 const CAD_SOFTWARES = [
   "AutoCAD", "SolidWorks", "Fusion 360", "CATIA",
