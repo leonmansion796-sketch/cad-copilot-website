@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 // Meshy API key is securely stored on the backend server
+const ANTHROPIC_KEY = process.env.REACT_APP_ANTHROPIC_API_KEY || "";
 
 const CAD_SOFTWARES = [
   "AutoCAD", "SolidWorks", "Fusion 360", "CATIA",
@@ -153,7 +154,12 @@ export default function CADAssistant() {
   const callClaude = async (system, messages, maxTokens = 1500) => {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "content-type": "application/json", "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+      headers: {
+          "content-type": "application/json",
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+          "x-api-key": ANTHROPIC_KEY,
+        },
       body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: maxTokens, system, messages }),
     });
     const data = await res.json();
