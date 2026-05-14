@@ -114,7 +114,7 @@ export default function CADAssistant() {
   const [meshyStatus, setMeshyStatus] = useState("");
   const [meshyUrls, setMeshyUrls] = useState(null);
   const [meshyError, setMeshyError] = useState("");
-  const [meshyTaskId, setMeshyTaskId] = useState(null);
+  // meshyTaskId removed - not needed in UI
 
   const responseRef = useRef(null);
   const imageResultRef = useRef(null);
@@ -148,12 +148,7 @@ export default function CADAssistant() {
     reader.readAsDataURL(file);
   });
 
-  const toDataURI = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+// toDataURI removed - using toBase64 instead
 
   const callClaude = async (system, messages, maxTokens = 1500) => {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -190,7 +185,7 @@ export default function CADAssistant() {
     setMeshyStatus("Uploading image to Meshy...");
     setMeshyUrls(null);
     setMeshyError("");
-    setMeshyTaskId(null);
+    
 
     try {
       // Convert image to base64
@@ -210,7 +205,7 @@ export default function CADAssistant() {
       if (!createRes.ok) throw new Error(createData?.error || `Backend error: ${createRes.status}`);
 
       const taskId = createData.taskId;
-      setMeshyTaskId(taskId);
+      // taskId stored in closure
       setMeshyStatus("Processing... this takes 1–3 minutes");
       setMeshyProgress(5);
 
